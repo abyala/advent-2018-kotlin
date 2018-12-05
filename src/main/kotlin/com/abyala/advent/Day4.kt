@@ -3,7 +3,7 @@ package com.abyala.advent
 import java.time.LocalDate
 import java.time.LocalDateTime
 
-class Day4(private val lines: List<String>) {
+class Day4(lines: List<String>) {
     private val guards: Map<GuardId, Guard> = ShiftParser.parse(lines)
 
     fun strategy1(): Int {
@@ -11,6 +11,18 @@ class Day4(private val lines: List<String>) {
         val sleepiestMinute = guard.sleepiestMinute()
 
         return guard.guardId * sleepiestMinute
+    }
+
+    fun strategy2(): Int {
+        val result = guards
+                .values
+                .associateBy { it.minuteMostOftenAsleep() }
+                .maxBy { it.key.second }!!
+
+        val guardId = result.value.guardId
+        val minute = result.key.first
+
+        return guardId * minute
     }
 }
 
@@ -89,6 +101,8 @@ data class Guard(val guardId: Int, val shifts: MutableSet<Shift> = mutableSetOf(
     fun totalMinutesAsleep(): Int = everyMinuteAsleep().count()
     fun sleepiestMinute(): Int =
             everyMinuteAsleep().groupingBy { it }.eachCount().maxBy { it.value }!!.key
+
+    fun minuteMostOftenAsleep(): Pair<Int, Int> = everyMinuteAsleep().groupingBy { it }.eachCount().maxBy { it.value }!!.toPair()
 }
 
 data class Shift(val guardId: Int, val date: LocalDate, val start: Int, val end: Int)
