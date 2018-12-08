@@ -2,7 +2,7 @@ package com.abyala.advent
 
 import com.abyala.advent.Day3.Companion.REGEX
 
-typealias Point = Pair<Int, Int>
+typealias SimplePoint = Pair<Int, Int>
 
 class Day3 {
     /*
@@ -12,7 +12,7 @@ class Day3 {
             claims.map(String::toClaim)
                     .map(Claim::points)
                     .flatten()
-                    .fold(mutableMapOf<Point, Int>()) { map, point ->
+                    .fold(mutableMapOf<SimplePoint, Int>()) { map, point ->
                         map[point] = map[point]?.plus(1) ?: 1
                         map
                     }.count { it.value > 1 }
@@ -30,9 +30,9 @@ class Day3 {
 }
 
 data class Claim(val id: Int, val left: Int, val top: Int, val width: Int, val height: Int) {
-    val points: Set<Point> by lazy {
+    val points: Set<SimplePoint> by lazy {
         (0 until width).flatMap { x ->
-            (0 until height).map { Point(left + x, top + it) }
+            (0 until height).map { SimplePoint(left + x, top + it) }
         }.toSet()
     }
 }
