@@ -5,16 +5,6 @@ import java.io.File
 import kotlin.test.assertEquals
 
 class Day7Tests {
-/*
-    @Test
-    fun `Parse input`() {
-        val allDependencies = Day7(getFirstSampleData()).rawDependencies
-
-        assertEquals(7, allDependencies.size)
-        assertNotNull(allDependencies.firstOrNull{ it.first == "C" && it.second == "A"})
-        assertNull(allDependencies.firstOrNull{ it.first == "A" && it.second == "C"})
-    }*/
-
     @Test
     fun `First example question`() {
         assertEquals("CABDFE", Day7(getFirstSampleData()).problem1())
