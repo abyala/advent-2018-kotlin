@@ -1,14 +1,12 @@
 package com.abyala.advent
 
-import java.math.BigInteger
-
 class Day9(private val numPlayers: Int, private val numMarbles: Int) {
     private var currentNode = Node(0)
-    private val players = mutableMapOf<Int, BigInteger>().apply {
-        (0 until numPlayers).forEach { put(it, BigInteger.ZERO) }
+    private val players = mutableMapOf<Int, Long>().apply {
+        (0 until numPlayers).forEach { put(it, 0) }
     }
 
-    fun problem1(): BigInteger {
+    fun problem1(): Long {
         (1..numMarbles).forEach { addMarble(it) }
         return players.maxBy { it.value }!!.value
     }
@@ -27,7 +25,7 @@ class Day9(private val numPlayers: Int, private val numMarbles: Int) {
     private fun twentyThreeInsert(marble: Int) {
         val player = marble % numPlayers
         (1 until 7).forEach { currentNode = currentNode.left }
-        players[player] = players[player]!! + marble.toBigInteger() + currentNode.removeLeft().toBigInteger()
+        players[player] = players[player]!! + marble.toLong() + currentNode.removeLeft().toLong()
     }
 
     // Why would I be so foolish as to make my own linked list? Because I want a pointer to the current value.
